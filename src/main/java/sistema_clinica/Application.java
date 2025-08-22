@@ -12,13 +12,4 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
-	@Bean
-	CommandLineRunner commandLineRunner(org.springframework.core.env.Environment env) {
-		return args -> {
-			System.out.println("--- VERIFICANDO PROPRIEDADE DO SCALAR ---");
-			String scalarProperty = env.getProperty("springdoc.swagger-ui.use-scalar-layout");
-			System.out.println("O valor lido de 'springdoc.swagger-ui.use-scalar-layout' é: [" + scalarProperty + "]");
-			System.out.println("-------------------------------------------");
-		};
-	}
 }
