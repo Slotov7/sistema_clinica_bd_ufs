@@ -6,7 +6,7 @@ import sistema_clinica.model.mongo.UsuarioDocument;
 
 import java.util.Optional;
 
-@Profile("mongo")
+
 public interface UsuarioMongoRepository extends MongoRepository<UsuarioDocument, String> {
     Optional<UsuarioDocument> findByUsername(String username);
 }

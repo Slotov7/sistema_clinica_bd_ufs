@@ -6,7 +6,7 @@ import sistema_clinica.model.TipoUsuario;
 
 @Data
 @Entity
-@Table(name = "usuario", schema = "sistema_saude")
+@Table(name = "usuario")
 public class Usuario {
 
     @Id

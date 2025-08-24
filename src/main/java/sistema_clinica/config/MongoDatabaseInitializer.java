@@ -12,7 +12,6 @@ import sistema_clinica.repository.mongo.UsuarioMongoRepository;
 import java.util.Arrays;
 import java.util.List;
 
-@Profile("mongo")
 @Component
 public class MongoDatabaseInitializer implements CommandLineRunner {
 

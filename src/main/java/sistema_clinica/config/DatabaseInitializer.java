@@ -11,7 +11,6 @@ import sistema_clinica.repository.relacional.UsuarioRepository;
 import java.util.Arrays;
 import java.util.List;
 
-@Profile("postgres")
 @Component
 public class DatabaseInitializer implements CommandLineRunner {
 
