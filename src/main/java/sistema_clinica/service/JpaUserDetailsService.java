@@ -4,7 +4,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import sistema_clinica.repository.UsuarioRepository;
+import sistema_clinica.repository.relacional.UsuarioRepository;
 import sistema_clinica.security.SecurityUsuario;
 
 @Service

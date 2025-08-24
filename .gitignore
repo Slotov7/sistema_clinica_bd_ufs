@@ -33,14 +33,19 @@ out/
 /nbdist/
 /.nb-gradle/
 
+# Pastas de dados do Docker
+postgres_data/
+mongo_data/
+pgadmin_data/
+
 ### VS Code ###
 .vscode/
 application.properties
 *.code-workspace
 resources/application.properties
-
-# Pastas de dados do Docker
-postgres_data/
-mongo_data/
-pgadmin_data/
+<<<<<<< HEAD
+=======
+/src/main/resources/application-postgres.properties
+/src/main/resources/application-mongo.properties
+>>>>>>> feat/usuario-mongo-crud
 
