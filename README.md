@@ -36,6 +36,7 @@ De acordo com a especificação do trabalho, esta etapa consiste em:
 Antes de iniciar, certifique-se de ter instalado:
 - JDK 17+
 - Gradle 8.x
+- Docker e Docker Compose
 - PostgreSQL (rodando localmente ou via Docker)
 - MongoDB (rodando localmente ou via Docker)
 - IDE de sua preferência (IntelliJ, VS Code, Eclipse, etc.)
@@ -48,19 +49,30 @@ Antes de iniciar, certifique-se de ter instalado:
    ```bash
    git clone https://github.com/Slotov7/sistema_clinica_bd_ufs.git
 
-2. **Configuração do PostgreSQL**
 
-    Crie um banco de dados chamado saude (ou outro nome).
+2. **Configuração dos Bancos de Dados (Docker)**
 
-    Execute o script sistema_saude_postgresql.sql para criar o schema e tabelas.
+   Com o uso do Docker, a configuração de ambos os bancos de dados é **totalmente automatizada**. Você não precisa mais criar os bancos ou rodar scripts manualmente.
 
+   Basta executar o seguinte comando na raiz do projeto:
+   ```bash
+   docker-compose up -d
 
-3. **Configuração do MongoDB**
+Este único comando irá:
 
-   Garanta que o servidor Mongo esteja ativo (porta padrão: 27017).
+- Iniciar os contêineres do **PostgreSQL** e do **MongoDB**. 
+- Para o PostgreSQL, criar automaticamente o banco `saude` e importar o schema SQL. 
+- Para o MongoDB, preparar o banco de dados `saude`. 
 
-   Crie um database correspondente (ex.: saude).
+Nenhuma outra configuração manual é necessária. Caso deseje ver se eles estão rodando, basta executar:
+   ```bash
+   docker-compose ps
+```
 
+   Para parar os conteinerês, basta executar o comando:
+   ```bash
+   docker-compose down 
+```
 
 4. **Ajuste as credenciais no application.properties**
    ```
