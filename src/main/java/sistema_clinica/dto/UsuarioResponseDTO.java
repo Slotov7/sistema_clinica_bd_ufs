@@ -1,7 +1,7 @@
 package sistema_clinica.dto;
 
-import sistema_clinica.model.TipoUsuario;
-import sistema_clinica.model.Usuario;
+import sistema_clinica.model.relacional.TipoUsuario;
+import sistema_clinica.model.relacional.Usuario;
 
 import lombok.Data;
 @Data

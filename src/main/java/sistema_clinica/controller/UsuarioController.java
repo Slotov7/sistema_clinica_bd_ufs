@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sistema_clinica.dto.UsuarioRequestDTO;
 import sistema_clinica.dto.UsuarioResponseDTO;
-import sistema_clinica.model.Usuario;
+import sistema_clinica.model.relacional.Usuario;
 import sistema_clinica.repository.UsuarioRepository;
 import sistema_clinica.service.UsuarioService;
 

@@ -3,7 +3,7 @@ package sistema_clinica.service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sistema_clinica.dto.UsuarioRequestDTO;
-import sistema_clinica.model.Usuario;
+import sistema_clinica.model.relacional.Usuario;
 import sistema_clinica.repository.UsuarioRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;

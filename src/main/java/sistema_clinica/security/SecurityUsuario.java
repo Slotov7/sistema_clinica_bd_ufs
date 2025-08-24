@@ -2,7 +2,7 @@ package sistema_clinica.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import sistema_clinica.model.Usuario;
+import sistema_clinica.model.relacional.Usuario;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Arrays;

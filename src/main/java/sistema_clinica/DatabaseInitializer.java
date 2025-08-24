@@ -3,8 +3,8 @@ package sistema_clinica;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import sistema_clinica.model.TipoUsuario;
-import sistema_clinica.model.Usuario;
+import sistema_clinica.model.relacional.TipoUsuario;
+import sistema_clinica.model.relacional.Usuario;
 import sistema_clinica.repository.UsuarioRepository;
 
 import java.util.Arrays;
