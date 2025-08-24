@@ -9,12 +9,9 @@ import sistema_clinica.repository.relacional.UsuarioRepository;
 
 import java.util.List;
 
-/**
- * Serviço que contém a lógica de negócio para as operações CRUD de Usuários
- * no banco de dados relacional (PostgreSQL).
- */
+
 @Service
-public class UsuarioRelacionalService { // Nome da classe alterado
+public class UsuarioRelacionalService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
@@ -44,7 +41,7 @@ public class UsuarioRelacionalService { // Nome da classe alterado
         return usuarioRepository.save(novoUsuario);
     }
 
-    public Usuario atualizarUsuario(Integer id, UsuarioRequestDTO dto) { // ID é Integer
+    public Usuario atualizarUsuario(Integer id, UsuarioRequestDTO dto) {
         Usuario usuarioExistente = buscarPorId(id);
 
         usuarioExistente.setNome(dto.getNome());
@@ -52,12 +49,11 @@ public class UsuarioRelacionalService { // Nome da classe alterado
         usuarioExistente.setEmail(dto.getEmail());
         usuarioExistente.setTelefone(dto.getTelefone());
         usuarioExistente.setTipoUsuario(dto.getTipoUsuario());
-        // A senha geralmente não é atualizada aqui, a menos que seja uma funcionalidade específica
 
         return usuarioRepository.save(usuarioExistente);
     }
 
-    public void deletarUsuario(Integer id) { // ID é Integer
+    public void deletarUsuario(Integer id) {
         if (!usuarioRepository.existsById(id)) {
             throw new EntityNotFoundException("Usuário com id: " + id + " não encontrado para exclusão.");
         }

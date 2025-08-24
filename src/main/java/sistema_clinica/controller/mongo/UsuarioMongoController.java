@@ -7,20 +7,17 @@ import org.springframework.web.bind.annotation.*;
 import sistema_clinica.dto.UsuarioRequestDTO;
 import sistema_clinica.dto.UsuarioResponseDTO;
 import sistema_clinica.model.mongo.UsuarioDocument;
-import sistema_clinica.service.mongo.UsuarioMongoService; // Importa o serviço específico
+import sistema_clinica.service.mongo.UsuarioMongoService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Controlador para gerenciar as operações CRUD de Usuários
- * no banco de dados NoSQL (MongoDB).
- */
+
 @RestController
-@RequestMapping("/api/nosql/usuarios") // Rota base para os endpoints NoSQL
+@RequestMapping("/api/nosql/usuarios")
 public class UsuarioMongoController {
 
-    private final UsuarioMongoService usuarioMongoService; // Injeta o serviço do Mongo
+    private final UsuarioMongoService usuarioMongoService;
 
     public UsuarioMongoController(UsuarioMongoService usuarioMongoService) {
         this.usuarioMongoService = usuarioMongoService;
@@ -30,13 +27,13 @@ public class UsuarioMongoController {
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios() {
         List<UsuarioDocument> usuarios = usuarioMongoService.listarTodos();
         List<UsuarioResponseDTO> responseDTOs = usuarios.stream()
-                .map(UsuarioResponseDTO::new) // O DTO também sabe se construir a partir de um UsuarioDocument
+                .map(UsuarioResponseDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(responseDTOs);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable String id) { // ID é String
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable String id) {
         UsuarioDocument usuario = usuarioMongoService.buscarPorId(id);
         UsuarioResponseDTO responseDTO = new UsuarioResponseDTO(usuario);
         return ResponseEntity.ok(responseDTO);
@@ -50,14 +47,14 @@ public class UsuarioMongoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable String id, @Valid @RequestBody UsuarioRequestDTO dto) { // ID é String
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable String id, @Valid @RequestBody UsuarioRequestDTO dto) {
         UsuarioDocument usuarioAtualizado = usuarioMongoService.atualizarUsuario(id, dto);
         UsuarioResponseDTO responseDTO = new UsuarioResponseDTO(usuarioAtualizado);
         return ResponseEntity.ok(responseDTO);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarUsuario(@PathVariable String id) { // ID é String
+    public ResponseEntity<Void> deletarUsuario(@PathVariable String id) {
         usuarioMongoService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
     }

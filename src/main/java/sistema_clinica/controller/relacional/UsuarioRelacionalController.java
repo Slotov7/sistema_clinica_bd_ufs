@@ -7,20 +7,17 @@ import org.springframework.web.bind.annotation.*;
 import sistema_clinica.dto.UsuarioRequestDTO;
 import sistema_clinica.dto.UsuarioResponseDTO;
 import sistema_clinica.model.relacional.Usuario;
-import sistema_clinica.service.relacional.UsuarioRelacionalService; // Importa o serviço específico
+import sistema_clinica.service.relacional.UsuarioRelacionalService;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Controlador para gerenciar as operações CRUD de Usuários
- * no banco de dados relacional (PostgreSQL).
- */
+
 @RestController
-@RequestMapping("/api/rel/usuarios") // Rota base para os endpoints relacionais
+@RequestMapping("/api/rel/usuarios")
 public class UsuarioRelacionalController {
 
-    private final UsuarioRelacionalService usuarioService; // Injeta o serviço relacional
+    private final UsuarioRelacionalService usuarioService;
 
     public UsuarioRelacionalController(UsuarioRelacionalService usuarioService) {
         this.usuarioService = usuarioService;
@@ -30,13 +27,13 @@ public class UsuarioRelacionalController {
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios() {
         List<Usuario> usuarios = usuarioService.listarTodos();
         List<UsuarioResponseDTO> responseDTOs = usuarios.stream()
-                .map(UsuarioResponseDTO::new) // O DTO sabe como se construir a partir de um Usuario
+                .map(UsuarioResponseDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(responseDTOs);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable Integer id) { // ID é Integer
+    public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable Integer id) {
         Usuario usuario = usuarioService.buscarPorId(id);
         UsuarioResponseDTO responseDTO = new UsuarioResponseDTO(usuario);
         return ResponseEntity.ok(responseDTO);
@@ -50,14 +47,14 @@ public class UsuarioRelacionalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Integer id, @Valid @RequestBody UsuarioRequestDTO dto) { // ID é Integer
+    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(@PathVariable Integer id, @Valid @RequestBody UsuarioRequestDTO dto) {
         Usuario usuarioAtualizado = usuarioService.atualizarUsuario(id, dto);
         UsuarioResponseDTO responseDTO = new UsuarioResponseDTO(usuarioAtualizado);
         return ResponseEntity.ok(responseDTO);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarUsuario(@PathVariable Integer id) { // ID é Integer
+    public ResponseEntity<Void> deletarUsuario(@PathVariable Integer id) {
         usuarioService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
     }

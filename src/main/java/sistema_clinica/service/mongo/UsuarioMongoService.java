@@ -1,6 +1,6 @@
 package sistema_clinica.service.mongo;
 
-import jakarta.persistence.EntityNotFoundException; // Import alterado para uma exceção padrão
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sistema_clinica.dto.UsuarioRequestDTO;
@@ -9,10 +9,7 @@ import sistema_clinica.repository.mongo.UsuarioMongoRepository;
 
 import java.util.List;
 
-/**
- * Serviço que contém a lógica de negócio para as operações CRUD de Usuários
- * no banco de dados NoSQL (MongoDB).
- */
+
 @Service
 public class UsuarioMongoService {
 
@@ -28,7 +25,7 @@ public class UsuarioMongoService {
         return usuarioMongoRepository.findAll();
     }
 
-    public UsuarioDocument buscarPorId(String id) { // ID é String
+    public UsuarioDocument buscarPorId(String id) {
         return usuarioMongoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário com id: " + id + " não encontrado.")); // Exceção alterada
     }
@@ -44,7 +41,7 @@ public class UsuarioMongoService {
         return usuarioMongoRepository.save(novoUsuario);
     }
 
-    public UsuarioDocument atualizarUsuario(String id, UsuarioRequestDTO dto) { // ID é String
+    public UsuarioDocument atualizarUsuario(String id, UsuarioRequestDTO dto) {
         UsuarioDocument usuarioExistente = buscarPorId(id);
 
         usuarioExistente.setNome(dto.getNome());
@@ -56,9 +53,9 @@ public class UsuarioMongoService {
         return usuarioMongoRepository.save(usuarioExistente);
     }
 
-    public void deletarUsuario(String id) { // ID é String
+    public void deletarUsuario(String id) {
         if (!usuarioMongoRepository.existsById(id)) {
-            throw new EntityNotFoundException("Usuário com id: " + id + " não encontrado para exclusão."); // Exceção alterada
+            throw new EntityNotFoundException("Usuário com id: " + id + " não encontrado para exclusão.");
         }
         usuarioMongoRepository.deleteById(id);
     }
