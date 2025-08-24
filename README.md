@@ -1,151 +1,104 @@
-# 🚀 Sistema de Clínica - UFS
+# Trabalho Prático de Banco de Dados — **API Sistema de Saúde**
 
-[![Java](https://img.shields.io/badge/Java-17-blue?logo=java)](https://www.oracle.com/java/)  
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.0-brightgreen?logo=springboot)](https://spring.io/projects/spring-boot)  
-[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?logo=docker)](https://www.docker.com/)  
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?logo=postgresql)](https://www.postgresql.org/)  
-[![MongoDB](https://img.shields.io/badge/MongoDB-7-47A248?logo=mongodb)](https://www.mongodb.com/)  
-[![Gradle](https://img.shields.io/badge/Gradle-7.6-02303A?logo=gradle)](https://gradle.org/)  
+API REST desenvolvida como parte da disciplina de **Banco de Dados**, ministrada pelo professor **André Britto de Carvalho**.
 
-Este projeto é um sistema desenvolvido em **Spring Boot**, configurado para funcionar tanto com **PostgreSQL** quanto com **MongoDB**, utilizando **Docker Compose** para a gestão dos bancos de dados e **Spring Profiles** para alternar entre as configurações.
+O objetivo principal da aplicação é **demonstrar a comunicação com diferentes Sistemas Gerenciadores de Banco de Dados (SGBDs)** através de operações **CRUD (Create, Read, Update, Delete)**, com suporte tanto para um **banco relacional (PostgreSQL)** quanto para um **banco NoSQL (MongoDB)**.
+
+![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow)
 
 ---
 
-## 📦 Como Executar o Projeto
+## 🚀 Tecnologias Utilizadas
 
-### 1. Clone o repositório
-```bash
-git clone https://github.com/Slotov7/sistema_clinica_bd_ufs.git
-cd sistema_clinica_bd_ufs
-```
-
----
-
-### 2. Configuração (Docker + Spring Profiles)
-
-- **Docker Compose**: gerencia os contêineres do PostgreSQL e MongoDB.  
-- **Spring Profiles**: define qual banco de dados será utilizado pela aplicação.  
-
-No projeto, você encontrará os arquivos de configuração:
-
-- `docker-compose.yml` → define os contêineres e credenciais.  
-- `application-postgres.properties` → configuração para PostgreSQL.  
-- `application-mongo.properties` → configuração para MongoDB.  
-- `application.properties` → o “interruptor” que escolhe o perfil ativo.  
+![Java](https://img.shields.io/badge/Java-17-red?logo=openjdk&logoColor=white)  
+![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen?logo=spring&logoColor=white)  
+![Gradle](https://img.shields.io/badge/Gradle-8.x-02303A?logo=gradle&logoColor=white)  
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?logo=postgresql&logoColor=white)  
+![MongoDB](https://img.shields.io/badge/MongoDB-7-green?logo=mongodb&logoColor=white)  
+![Hibernate](https://img.shields.io/badge/Hibernate-JPA-59666C?logo=hibernate&logoColor=white)  
+![Swagger](https://img.shields.io/badge/OpenAPI-Swagger%20UI-85EA2D?logo=openapi-initiative&logoColor=black)  
+![Lombok](https://img.shields.io/badge/Lombok-Annotation%20Processor-orange)
 
 ---
 
-### 3. Inicie os Bancos de Dados com Docker Compose
-Na raiz do projeto, execute:
+## 📋 Requisitos da Etapa 2
+De acordo com a especificação do trabalho, esta etapa consiste em:
 
-```bash
-docker-compose up -d
-```
-
-Isso irá:
-- Iniciar um contêiner **PostgreSQL** (porta `5432`).  
-- Iniciar um contêiner **MongoDB** (porta `27017`).  
-- Criar automaticamente os bancos e usuários definidos no `docker-compose.yml`.  
-
-📌 Caso precise, segue um modelo de `docker-compose.yml`:
-
-```yaml
-version: '3.8'
-
-services:
-  postgres-db:
-    image: postgres:16
-    container_name: postgres-saude
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
-      POSTGRES_DB: saude_db
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-  mongo-db:
-    image: mongo:7
-    container_name: mongo-saude
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
-
-volumes:
-  postgres_data:
-  mongo_data:
-```
+- ✅ **CRUD Completo:** Implementar operações de `INSERT`, `DELETE`, `UPDATE` e `SELECT` para **3 tabelas**.
+- ✅ **Estrutura das Tabelas:** O CRUD deve abranger **duas tabelas de entidades** e **uma tabela de relacionamento**.
+- ✅ **Suporte a múltiplos bancos:** Os métodos devem funcionar no **PostgreSQL** e também no **MongoDB**.
+- ✅ **Entrega:** Código-fonte no GitHub (ou equivalente).
+- ✅ **Avaliação:** Vídeo demonstrativo mostrando as operações funcionando nos dois bancos.
 
 ---
 
-### 4. Configuração dos Perfis do Spring
-
-#### 🔹 Arquivo principal (`application.properties`)
-```properties
-# Altere entre 'postgres' e 'mongo' para definir o banco ativo
-spring.profiles.active=postgres
-```
-
-#### 🔹 Perfil PostgreSQL (`application-postgres.properties`)
-```properties
-spring.datasource.url=jdbc:postgresql://localhost:5432/saude_db
-spring.datasource.username=admin
-spring.datasource.password=admin
-
-spring.jpa.hibernate.ddl-auto=validate
-spring.jpa.properties.hibernate.default_schema=sistema_saude
-
-spring.data.jpa.repositories.enabled=true
-```
-
-#### 🔹 Perfil MongoDB (`application-mongo.properties`)
-```properties
-spring.data.mongodb.uri=mongodb://localhost:27017/saude_db
-
-# Desativa JPA quando o Mongo estiver ativo
-spring.data.jpa.repositories.enabled=false
-spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-```
+## ⚙️ Pré-requisitos
+Antes de iniciar, certifique-se de ter instalado:
+- JDK 17+
+- Gradle 8.x
+- Docker e Docker Compose
+- PostgreSQL (rodando localmente ou via Docker)
+- MongoDB (rodando localmente ou via Docker)
+- IDE de sua preferência (IntelliJ, VS Code, Eclipse, etc.)
 
 ---
 
-### 5. Execute a Aplicação
-Com os bancos rodando, basta iniciar a aplicação:
+## ▶️ Como Executar o Projeto
 
-```bash
-./gradlew bootRun
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/Slotov7/sistema_clinica_bd_ufs.git
+
+
+2. **Configuração dos Bancos de Dados (Docker)**
+
+   Com o uso do Docker, a configuração de ambos os bancos de dados é **totalmente automatizada**. Você não precisa mais criar os bancos ou rodar scripts manualmente.
+
+   Basta executar o seguinte comando na raiz do projeto:
+   ```bash
+   docker-compose up -d
+
+Este único comando irá:
+
+- Iniciar os contêineres do **PostgreSQL** e do **MongoDB**. 
+- Para o PostgreSQL, criar automaticamente o banco `saude` e importar o schema SQL. 
+- Para o MongoDB, preparar o banco de dados `saude`. 
+
+Nenhuma outra configuração manual é necessária. Caso deseje ver se eles estão rodando, basta executar:
+   ```bash
+   docker-compose ps
 ```
 
-A API estará disponível em:  
-👉 [http://localhost:8080](http://localhost:8080)
+   Para parar os conteinerês, basta executar o comando:
+   ```bash
+   docker-compose down 
+```
 
----
+4. **Ajuste as credenciais no application.properties**
+   ```
+   # PostgreSQL
+   spring.datasource.url=jdbc:postgresql://localhost:5432/[nome do seu banco]
+   spring.datasource.username=[seu usuário]
+   spring.datasource.password=[sua senha]
 
-## 🔄 Alternando entre Bancos de Dados
+   # MongoDB
+   spring.data.mongodb.uri=mongodb://localhost:27017/[nome do seu banco]
 
-Para trocar o banco utilizado:
-
-1. Pare a aplicação Spring Boot.  
-2. Abra o arquivo `application.properties`.  
-3. Altere:  
-   ```properties
-   spring.profiles.active=postgres   # ou mongo
-   ```  
-4. Reinicie a aplicação:  
+5. **Execute a aplicação**
+   Navegue até o diretório do projeto e execute:
+   ```bash
+   ./gradlew build
+   ```
+   Para iniciar a aplicação, execute:
    ```bash
    ./gradlew bootRun
-   ```
+A aplicação estará disponível em: http://localhost:8080
 
-Agora a API usará o banco de dados selecionado.  
-Você pode validar no **Swagger**, **pgAdmin** ou **MongoDB Compass**.
 
----
+**Documentação da API**
 
-## ✅ Resumo
+A documentação interativa pode ser acessada em:
 
-- **PostgreSQL e MongoDB** sobem via `docker-compose up -d`.  
-- O banco ativo é definido em `application.properties`.  
-- **Troca de banco** = mudar o perfil (`postgres` ↔ `mongo`) + reiniciar a aplicação.  
-- Aplicação acessível em 👉 [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) 
+http://localhost:8080/swagger-ui.html
+
+Aqui é possível visualizar e testar todos os endpoints CRUD.
