@@ -1,4 +1,4 @@
-package sistema_clinica.model.relacional;
+package sistema_clinica.model;
 
 public enum TipoUsuario {
     ADMIN,

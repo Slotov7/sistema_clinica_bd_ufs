@@ -1,16 +1,17 @@
-package sistema_clinica;
+package sistema_clinica.config;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import sistema_clinica.model.relacional.TipoUsuario;
+import sistema_clinica.model.TipoUsuario;
 import sistema_clinica.model.relacional.Usuario;
 import sistema_clinica.repository.UsuarioRepository;
 
 import java.util.Arrays;
 import java.util.List;
 
-
+@Profile("postgres")
 @Component
 public class DatabaseInitializer implements CommandLineRunner {
 
