@@ -60,7 +60,7 @@ public class MongoDatabaseInitializer implements CommandLineRunner {
         recepcionista.setSenha(passwordEncoder.encode("mongo123"));
         recepcionista.setTipoUsuario(TipoUsuario.RECEPCIONISTA);
 
-        List<UsuarioDocument> usuarios = Arrays.asList(admin, medico);
+        List<UsuarioDocument> usuarios = Arrays.asList(admin, medico, paciente, recepcionista);
         usuarioMongoRepository.saveAll(usuarios);
     }
 }
