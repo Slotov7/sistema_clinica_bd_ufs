@@ -1,15 +1,45 @@
+# =======================================
+# INFORMAÇÕES GERAIS DA APLICAÇÃO
+# =======================================
 spring.application.name=ufs.saude
+server.port=8080
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/nome_do_seu_banco
+# Ativa perfis específicos (ex: postgres,mongo).
+# Deixe em branco para usar apenas este arquivo.
+# Para o desenvolvimento deste projeto, o ideal é ativar os dois: postgres,mongo
+spring.profiles.active=postgres,mongo
 
-spring.datasource.username=seu_usuario_postgres
-spring.datasource.password=sua_senha_postgres
 
-spring.data.mongodb.uri=mongodb://localhost:27017/nome_banco_mongo
+# =======================================
+# CONFIGURAÇÃO DO POSTGRESQL (JPA)
+# =======================================
+# URL de conexão com o banco de dados. O padrão para o Docker é este.
+spring.datasource.url=jdbc:postgresql://localhost:5432/saude
 
+# Credenciais do banco de dados. O padrão para o Docker é 'postgres'.
+spring.datasource.username=postgres
+spring.datasource.password=postgres
+
+# Configurações do Hibernate/JPA
+# validate: valida o schema, não faz mudanças (mais seguro).
+# update: atualiza o schema se houver mudanças nas entidades.
+# create-drop: apaga e recria o schema a cada execução (bom para testes).
 spring.jpa.hibernate.ddl-auto=update
-
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.default_schema=sistema_saude
 spring.jpa.properties.hibernate.format_sql=true
+
+
+# =======================================
+# CONFIGURAÇÃO DO MONGODB
+# =======================================
+# URL de conexão com o MongoDB. O padrão para o Docker é este.
+spring.data.mongodb.uri=mongodb://localhost:27017/saude
+
+
+# =======================================
+# CONFIGURAÇÃO DO SWAGGER (OPENAPI)
+# =======================================
 springdoc.swagger-ui.use-scalar-layout=true
+springdoc.api-docs.path=/api-docs

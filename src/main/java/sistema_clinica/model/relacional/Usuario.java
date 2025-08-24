@@ -1,7 +1,8 @@
-package sistema_clinica.model;
+package sistema_clinica.model.relacional;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import sistema_clinica.model.TipoUsuario;
 
 @Data
 @Entity
