@@ -38,3 +38,5 @@ out/
 application.properties
 *.code-workspace
 resources/application.properties
+resources/application-mongo.properties
+resources/application-postgres.properties

@@ -1,14 +1,4 @@
 spring.application.name=ufs.saude
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/nome_do_seu_banco
-
-spring.datasource.username=seu_usuario_postgres
-spring.datasource.password=sua_senha_postgres
-
-spring.data.mongodb.uri=mongodb://localhost:27017/nome_banco_mongo
-
-spring.jpa.hibernate.ddl-auto=update ou create-drop ou drop
-
-spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.format_sql=true
+spring.profiles.active=postgres ou mongo
 
