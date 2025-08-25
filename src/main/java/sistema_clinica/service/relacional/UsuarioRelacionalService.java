@@ -25,7 +25,7 @@ public class UsuarioRelacionalService {
         return usuarioRepository.findAll();
     }
 
-    public Usuario buscarPorId(Integer id) { // ID é Integer
+    public Usuario buscarPorId(Integer id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuário com id: " + id + " não encontrado."));
     }
@@ -35,7 +35,7 @@ public class UsuarioRelacionalService {
         novoUsuario.setNome(dto.getNome());
         novoUsuario.setUsername(dto.getUsername());
         novoUsuario.setEmail(dto.getEmail());
-        novoUsuario.setSenha(passwordEncoder.encode(dto.getSenha())); // Criptografa a senha
+        novoUsuario.setSenha(passwordEncoder.encode(dto.getSenha()));
         novoUsuario.setTelefone(dto.getTelefone());
         novoUsuario.setTipoUsuario(dto.getTipoUsuario());
         return usuarioRepository.save(novoUsuario);
