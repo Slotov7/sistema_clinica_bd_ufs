@@ -3,21 +3,26 @@ package sistema_clinica.service.relacional;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sistema_clinica.dto.UsuarioRequestDTO;
+import sistema_clinica.model.TipoUsuario;
 import sistema_clinica.model.relacional.Usuario;
+import sistema_clinica.repository.relacional.MedicoRepository;
 import sistema_clinica.repository.relacional.UsuarioRepository;
 
 import java.util.List;
 
-
 @Service
 public class UsuarioRelacionalService {
-
     private final UsuarioRepository usuarioRepository;
+    private final MedicoRepository medicoRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UsuarioRelacionalService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioRelacionalService(UsuarioRepository usuarioRepository,
+                                    MedicoRepository medicoRepository,
+                                    PasswordEncoder passwordEncoder) {
         this.usuarioRepository = usuarioRepository;
+        this.medicoRepository = medicoRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -53,10 +58,16 @@ public class UsuarioRelacionalService {
         return usuarioRepository.save(usuarioExistente);
     }
 
+    @Transactional
     public void deletarUsuario(Integer id) {
-        if (!usuarioRepository.existsById(id)) {
-            throw new EntityNotFoundException("Usuário com id: " + id + " não encontrado para exclusão.");
+        Usuario usuario = this.buscarPorId(id);
+
+        if (usuario.getTipoUsuario() == TipoUsuario.MEDICO && medicoRepository.existsById(id)) {
+            throw new UnsupportedOperationException(
+                    "Este usuário é um médico e possui dependências. Utilize o endpoint /api/rel/medicos/{id} para removê-lo."
+            );
         }
+
         usuarioRepository.deleteById(id);
     }
 }

@@ -48,9 +48,9 @@ public class EspecializadoController {
         return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Void> deletarRelacionamento(@Valid @RequestBody EspecializadoRequestDTO dto) {
-        especializadoService.deletarEspecializado(dto);
+    @DeleteMapping("/medico/{medicoId}/especialidade/{especialidadeId}")
+    public ResponseEntity<Void> deletarRelacionamento(@PathVariable Integer medicoId, @PathVariable Integer especialidadeId) {
+        especializadoService.deletar(medicoId, especialidadeId);
         return ResponseEntity.noContent().build();
     }
 }

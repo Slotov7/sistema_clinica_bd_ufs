@@ -1,11 +1,14 @@
 package sistema_clinica.service.relacional;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import sistema_clinica.dto.MedicoDTO;
 import sistema_clinica.model.TipoUsuario;
+import sistema_clinica.model.relacional.Especializado;
 import sistema_clinica.model.relacional.Medico;
 import sistema_clinica.model.relacional.Usuario;
+import sistema_clinica.repository.relacional.EspecializadoRepository;
 import sistema_clinica.repository.relacional.MedicoRepository;
 import sistema_clinica.repository.relacional.UsuarioRepository;
 
@@ -17,10 +20,14 @@ public class MedicoService {
 
     private final MedicoRepository medicoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final EspecializadoRepository especializadoRepository;
 
-    public MedicoService(MedicoRepository medicoRepository, UsuarioRepository usuarioRepository) {
+    public MedicoService(MedicoRepository medicoRepository,
+                         UsuarioRepository usuarioRepository,
+                         EspecializadoRepository especializadoRepository) {
         this.medicoRepository = medicoRepository;
         this.usuarioRepository = usuarioRepository;
+        this.especializadoRepository = especializadoRepository;
     }
 
     public MedicoDTO criar(MedicoDTO dto) {
@@ -49,10 +56,17 @@ public class MedicoService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public void deletar(Integer id) {
         if (!medicoRepository.existsById(id)) {
             throw new EntityNotFoundException("Médico com ID " + id + " não encontrado.");
         }
+
+        List<Especializado> relacionamentos = especializadoRepository.findByIdMedicoId(id);
+        if (!relacionamentos.isEmpty()) {
+            especializadoRepository.deleteAll(relacionamentos);
+        }
+
         medicoRepository.deleteById(id);
     }
 }

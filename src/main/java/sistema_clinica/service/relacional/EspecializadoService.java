@@ -45,12 +45,12 @@ public class EspecializadoService {
         return especializadoRepository.save(novoRelacionamento);
     }
 
-    public void deletarEspecializado(EspecializadoRequestDTO dto) {
-        EspecializadoId idParaDeletar = new EspecializadoId(dto.getMedicoId(), dto.getEspecialidadeId());
+    public void deletar(Integer medicoId, Integer especialidadeId) {
+        EspecializadoId idParaDeletar = new EspecializadoId(medicoId, especialidadeId);
 
         if (!especializadoRepository.existsById(idParaDeletar)) {
-            throw new EntityNotFoundException("Relacionamento não encontrado para o médico ID " + dto.getMedicoId() + " e especialidade ID " + dto.getEspecialidadeId());
+            throw new EntityNotFoundException("Relacionamento não encontrado para o médico ID " + medicoId + " e especialidade ID " + especialidadeId);
         }
-
+        especializadoRepository.deleteById(idParaDeletar);
     }
 }
