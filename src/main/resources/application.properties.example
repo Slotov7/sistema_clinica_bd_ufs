@@ -1,15 +1,18 @@
 spring.application.name=ufs.saude
+server.port=8080
 
-spring.datasource.url=jdbc:postgresql://localhost:5432/nome_do_seu_banco
+# URL de conexão com o banco de dados. O padrão para o Docker é este.
+spring.datasource.url=jdbc:postgresql://localhost:5432/saude
 
-spring.datasource.username=seu_usuario_postgres
-spring.datasource.password=sua_senha_postgres
-
-spring.data.mongodb.uri=mongodb://localhost:27017/nome_banco_mongo
+# Credenciais do banco de dados. O padrão para o Docker é 'postgres'.
+spring.datasource.username=postgres
+spring.datasource.password=postgres
 
 spring.jpa.hibernate.ddl-auto=update
-
 spring.jpa.show-sql=true
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 spring.jpa.properties.hibernate.format_sql=true
-springdoc.swagger-ui.use-scalar-layout=true
+
+# URL de conexão com o MongoDB. O padrão para o Docker é este.
+spring.data.mongodb.uri=mongodb://localhost:27017/saude
+
+springdoc.api-docs.path=/api-docs
