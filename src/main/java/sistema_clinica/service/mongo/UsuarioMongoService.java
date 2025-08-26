@@ -31,7 +31,7 @@ public class UsuarioMongoService {
 
     public UsuarioDocument buscarPorId(String id) {
         return usuarioMongoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Usuário com id: " + id + " não encontrado.")); // Exceção alterada
+                .orElseThrow(() -> new EntityNotFoundException("Usuário com id: " + id + " não encontrado."));
     }
 
     public UsuarioDocument criarUsuario(UsuarioRequestDTO dto) {
@@ -51,6 +51,7 @@ public class UsuarioMongoService {
         usuarioExistente.setNome(dto.getNome());
         usuarioExistente.setUsername(dto.getUsername());
         usuarioExistente.setEmail(dto.getEmail());
+        usuarioExistente.setSenha(passwordEncoder.encode(dto.getSenha()));
         usuarioExistente.setTelefone(dto.getTelefone());
         usuarioExistente.setTipoUsuario(dto.getTipoUsuario());
 

@@ -24,7 +24,7 @@ public class EspecialidadeService {
 
     public Especialidade buscarPorId(Integer id) {
         return especialidadeRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Especialidade com id: " + id + " não encontrado."));
+                .orElseThrow(() -> new EntityNotFoundException("Especialidade com id: " + id + "não encontrado."));
 
     }
 

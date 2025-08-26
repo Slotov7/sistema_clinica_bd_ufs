@@ -52,6 +52,7 @@ public class UsuarioRelacionalService {
         usuarioExistente.setNome(dto.getNome());
         usuarioExistente.setUsername(dto.getUsername());
         usuarioExistente.setEmail(dto.getEmail());
+        usuarioExistente.setSenha(passwordEncoder.encode(dto.getSenha()));
         usuarioExistente.setTelefone(dto.getTelefone());
         usuarioExistente.setTipoUsuario(dto.getTipoUsuario());
 
