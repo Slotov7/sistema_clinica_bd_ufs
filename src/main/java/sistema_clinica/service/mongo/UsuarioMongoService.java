@@ -4,6 +4,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import sistema_clinica.dto.UsuarioRequestDTO;
+import sistema_clinica.model.TipoUsuario;
+import sistema_clinica.model.mongo.EspecialidadeDocument;
 import sistema_clinica.model.mongo.UsuarioDocument;
 import sistema_clinica.repository.mongo.UsuarioMongoRepository;
 
@@ -15,10 +17,12 @@ public class UsuarioMongoService {
 
     private final UsuarioMongoRepository usuarioMongoRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EspecialidadeMongoService especialidadeMongoService;
 
-    public UsuarioMongoService(UsuarioMongoRepository usuarioMongoRepository, PasswordEncoder passwordEncoder) {
+    public UsuarioMongoService(UsuarioMongoRepository usuarioMongoRepository, PasswordEncoder passwordEncoder, EspecialidadeMongoService especialidadeMongoService) {
         this.usuarioMongoRepository = usuarioMongoRepository;
         this.passwordEncoder = passwordEncoder;
+        this.especialidadeMongoService = especialidadeMongoService;
     }
 
     public List<UsuarioDocument> listarTodos() {
@@ -58,5 +62,28 @@ public class UsuarioMongoService {
             throw new EntityNotFoundException("Usuário com id: " + id + " não encontrado para exclusão.");
         }
         usuarioMongoRepository.deleteById(id);
+    }
+    public UsuarioDocument adicionarEspecialidade(String usuarioId, String especialidadeId) {
+        UsuarioDocument usuario = buscarPorId(usuarioId);
+        if (usuario.getTipoUsuario() != TipoUsuario.MEDICO) {
+            throw new IllegalArgumentException("Só é possível adicionar especialidades a usuários do tipo MÉDICO.");
+        }
+        EspecialidadeDocument especialidade = especialidadeMongoService.buscarPorId(especialidadeId);
+        if (usuario.getEspecialidadeIds().contains(especialidade.getId())) {
+            throw new IllegalArgumentException("O médico já possui esta especialidade.");
+        }
+        usuario.getEspecialidadeIds().add(especialidade.getId());
+        return usuarioMongoRepository.save(usuario);
+    }
+    public UsuarioDocument removerEspecialidade(String usuarioId, String especialidadeId) {
+        UsuarioDocument usuario = buscarPorId(usuarioId);
+        if (usuario.getTipoUsuario() != TipoUsuario.MEDICO) {
+            throw new IllegalArgumentException("Apenas usuários do tipo MÉDICO possuem especialidades para remover.");
+        }
+        boolean removeu = usuario.getEspecialidadeIds().remove(especialidadeId);
+        if (!removeu) {
+            throw new EntityNotFoundException("O médico não possui a especialidade com id: " + especialidadeId + " para ser removida.");
+        }
+        return usuarioMongoRepository.save(usuario);
     }
 }

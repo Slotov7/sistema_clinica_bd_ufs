@@ -76,6 +76,8 @@ public class DatabaseInitializer implements CommandLineRunner {
         medico.setTelefone("79999990002");
         medico.setTipoUsuario(TipoUsuario.MEDICO);
 
+
+
         List<Usuario> usuarios = Arrays.asList(admin, medico);
         usuarioRepository.saveAll(usuarios);
     }
