@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sistema_clinica.dto.AdicionarEspecialidadeRequestDTO;
 import sistema_clinica.dto.UsuarioRequestDTO;
 import sistema_clinica.dto.UsuarioResponseDTO;
 import sistema_clinica.model.mongo.UsuarioDocument;
@@ -11,7 +12,6 @@ import sistema_clinica.service.mongo.UsuarioMongoService;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
 
 @RestController
 @RequestMapping("/api/nosql/usuarios")
@@ -57,5 +57,23 @@ public class UsuarioMongoController {
     public ResponseEntity<Void> deletarUsuario(@PathVariable String id) {
         usuarioMongoService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{usuarioId}/especialidades")
+    public ResponseEntity<UsuarioResponseDTO> adicionarEspecialidade(
+            @PathVariable String usuarioId,
+            @Valid @RequestBody AdicionarEspecialidadeRequestDTO dto) {
+
+        UsuarioDocument usuarioAtualizado = usuarioMongoService.adicionarEspecialidade(usuarioId, dto.getEspecialidadeId());
+        return ResponseEntity.ok(new UsuarioResponseDTO(usuarioAtualizado));
+    }
+
+    @DeleteMapping("/{usuarioId}/especialidades/{especialidadeId}")
+    public ResponseEntity<UsuarioResponseDTO> removerEspecialidade(
+            @PathVariable String usuarioId,
+            @PathVariable String especialidadeId) {
+
+        UsuarioDocument usuarioAtualizado = usuarioMongoService.removerEspecialidade(usuarioId, especialidadeId);
+        return ResponseEntity.ok(new UsuarioResponseDTO(usuarioAtualizado));
     }
 }
