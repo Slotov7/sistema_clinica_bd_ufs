@@ -4,12 +4,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sistema_clinica.dto.AdicionarEspecialidadeRequestDTO;
 import sistema_clinica.dto.EspecialidadeRequestDTO;
 import sistema_clinica.dto.EspecialidadeResponseDTO;
-import sistema_clinica.dto.UsuarioResponseDTO;
 import sistema_clinica.model.mongo.EspecialidadeDocument;
-import sistema_clinica.model.mongo.UsuarioDocument;
 import sistema_clinica.service.mongo.EspecialidadeMongoService;
 
 import java.util.List;
