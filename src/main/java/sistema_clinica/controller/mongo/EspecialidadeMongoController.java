@@ -25,7 +25,7 @@ public class EspecialidadeMongoController {
     public ResponseEntity<List<EspecialidadeResponseDTO>> listarEspecialidades() {
         List<EspecialidadeDocument> especialidades = especialidadeMongoService.listarTodas();
         List<EspecialidadeResponseDTO> responseDTOs = especialidades.stream()
-                .map(EspecialidadeResponseDTO::new) // Usando o construtor que criamos!
+                .map(EspecialidadeResponseDTO::new)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(responseDTOs);
     }
