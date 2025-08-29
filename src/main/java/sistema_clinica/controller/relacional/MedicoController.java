@@ -25,9 +25,21 @@ public class MedicoController {
         return new ResponseEntity<>(medicoCriado, HttpStatus.CREATED);
     }
 
-    @GetMapping
+        @GetMapping
     public ResponseEntity<List<MedicoDTO>> listarMedicos() {
         return ResponseEntity.ok(medicoService.listarTodos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MedicoDTO> buscarMedicoPorId(@PathVariable Integer id) {
+        MedicoDTO medico = medicoService.buscarPorId(id);
+        return ResponseEntity.ok(medico);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MedicoDTO> atualizarMedico(@PathVariable Integer id, @Valid @RequestBody MedicoDTO dto) {
+        MedicoDTO medicoAtualizado = medicoService.atualizar(id, dto);
+        return ResponseEntity.ok(medicoAtualizado);
     }
 
     @DeleteMapping("/{id}")

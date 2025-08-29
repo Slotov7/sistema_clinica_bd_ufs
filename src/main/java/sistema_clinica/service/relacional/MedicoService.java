@@ -56,6 +56,27 @@ public class MedicoService {
                 .collect(Collectors.toList());
     }
 
+    public MedicoDTO buscarPorId(Integer id) {
+        Medico medico = medicoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Médico com ID " + id + " não encontrado."));
+        return new MedicoDTO(medico);
+    }
+
+    @Transactional
+    public MedicoDTO atualizar(Integer id, MedicoDTO dto) {
+        Medico medico = medicoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Médico com ID " + id + " não encontrado."));
+
+        // Valida se o ID do usuário no DTO corresponde ao ID do usuário associado ao médico
+        if (!dto.usuarioId().equals(medico.getUsuario().getId())) {
+            throw new IllegalArgumentException("Não é permitido alterar o usuário associado ao médico.");
+        }
+
+        medico.setCrm(dto.crm());
+        Medico medicoAtualizado = medicoRepository.save(medico);
+        return new MedicoDTO(medicoAtualizado);
+    }
+
     @Transactional
     public void deletar(Integer id) {
         if (!medicoRepository.existsById(id)) {

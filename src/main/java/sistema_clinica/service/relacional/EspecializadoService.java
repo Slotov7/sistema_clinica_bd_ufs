@@ -28,11 +28,11 @@ public class EspecializadoService {
     }
 
     public List<Especializado> listarTodos() {
-        return especializadoRepository.findAll();
+        return especializadoRepository.findAllWithDetails();
     }
 
     public List<Especializado> listarPorMedico(Integer medicoId) {
-        return especializadoRepository.findByIdMedicoId(medicoId);
+        return especializadoRepository.findByIdMedicoIdWithDetails(medicoId);
     }
 
     public Especializado criarEspecializado(EspecializadoRequestDTO dto) {
