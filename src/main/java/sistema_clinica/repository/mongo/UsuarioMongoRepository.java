@@ -12,5 +12,10 @@ import java.util.Optional;
 public interface UsuarioMongoRepository extends MongoRepository<UsuarioDocument, String> {
     Optional<UsuarioDocument> findByUsername(String username);
 
+    List<UsuarioDocument> findByTipoUsuario(TipoUsuario tipoUsuario);
+
+    Optional<UsuarioDocument> findByIdAndTipoUsuario(String id, TipoUsuario tipoUsuario);
+
     List<UsuarioDocument> findByTipoUsuarioAndEspecialidadeIdsContains(TipoUsuario tipo, String especialidadeId);
 }
+

@@ -1,0 +1,51 @@
+
+package sistema_clinica.controller.mongo;
+
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import sistema_clinica.dto.MedicoDTO;
+import sistema_clinica.service.mongo.MedicoMongoService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/nosql/medicos")
+public class MedicoMongoController {
+
+    private final MedicoMongoService medicoService;
+
+    public MedicoMongoController(MedicoMongoService medicoService) {
+        this.medicoService = medicoService;
+    }
+
+    @PostMapping
+    public ResponseEntity<MedicoDTO> criarMedico(@Valid @RequestBody MedicoDTO dto) {
+        MedicoDTO medicoCriado = medicoService.criar(dto);
+        return new ResponseEntity<>(medicoCriado, HttpStatus.CREATED);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<MedicoDTO>> listarMedicos() {
+        return ResponseEntity.ok(medicoService.listarTodos());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MedicoDTO> buscarMedicoPorId(@PathVariable String id) {
+        MedicoDTO medico = medicoService.buscarPorId(id);
+        return ResponseEntity.ok(medico);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MedicoDTO> atualizarMedico(@PathVariable String id, @Valid @RequestBody MedicoDTO dto) {
+        MedicoDTO medicoAtualizado = medicoService.atualizar(id, dto);
+        return ResponseEntity.ok(medicoAtualizado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarMedico(@PathVariable String id) {
+        medicoService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+}
