@@ -1,11 +1,11 @@
 package sistema_clinica.dto;
 
 import jakarta.validation.constraints.NotNull;
+import sistema_clinica.model.mongo.UsuarioDocument;
 import sistema_clinica.model.relacional.Medico;
 
 public record MedicoDTO(
-        @NotNull(message = "O ID do usuário é obrigatório para criar um médico.")
-        Integer usuarioId,
+        String usuarioId,
 
         String nomeUsuario,
         @NotNull(message = "O CRM é obrigatório.")
@@ -13,9 +13,17 @@ public record MedicoDTO(
 ) {
     public MedicoDTO(Medico medico) {
         this(
-                medico.getId(),
+                String.valueOf(medico.getId()),
                 medico.getUsuario().getNome(),
                 medico.getCrm()
+        );
+    }
+
+    public MedicoDTO(UsuarioDocument usuario) {
+        this(
+                usuario.getId(),
+                usuario.getNome(),
+                (usuario.getCrm() != null) ? Integer.parseInt(usuario.getCrm()) : null
         );
     }
 }
