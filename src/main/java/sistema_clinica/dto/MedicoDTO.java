@@ -5,6 +5,7 @@ import sistema_clinica.model.mongo.UsuarioDocument;
 import sistema_clinica.model.relacional.Medico;
 
 public record MedicoDTO(
+        @NotNull(message = "O id é obrigatório")
         String usuarioId,
 
         String nomeUsuario,

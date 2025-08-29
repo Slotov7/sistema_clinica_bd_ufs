@@ -31,7 +31,7 @@ public class MedicoService {
     }
 
     public MedicoDTO criar(MedicoDTO dto) {
-        Usuario usuario = usuarioRepository.findById(dto.usuarioId())
+        Usuario usuario = usuarioRepository.findById(Integer.valueOf(dto.usuarioId()))
                 .orElseThrow(() -> new EntityNotFoundException("Usuário com ID " + dto.usuarioId() + " não encontrado."));
 
         if (usuario.getTipoUsuario() != TipoUsuario.MEDICO) {
@@ -66,11 +66,6 @@ public class MedicoService {
     public MedicoDTO atualizar(Integer id, MedicoDTO dto) {
         Medico medico = medicoRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Médico com ID " + id + " não encontrado."));
-
-        // Valida se o ID do usuário no DTO corresponde ao ID do usuário associado ao médico
-        if (!dto.usuarioId().equals(medico.getUsuario().getId())) {
-            throw new IllegalArgumentException("Não é permitido alterar o usuário associado ao médico.");
-        }
 
         medico.setCrm(dto.crm());
         Medico medicoAtualizado = medicoRepository.save(medico);
