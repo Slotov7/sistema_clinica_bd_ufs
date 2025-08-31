@@ -95,7 +95,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         Medico medicoCarlos = new Medico();
         medicoCarlos.setUsuario(usuarioMedico);
-        medicoCarlos.setCrm(12345);
+        medicoCarlos.setCrm("12345-SE");
 
         medicoRepository.save(medicoCarlos);
     }
@@ -105,10 +105,10 @@ public class DatabaseInitializer implements CommandLineRunner {
         Especialidade cardiologia = especialidadeRepository.findById(1).orElseThrow();
         Especialidade dermatologia = especialidadeRepository.findById(2).orElseThrow();
 
-        EspecializadoId rel1Id = new EspecializadoId(Math.toIntExact(medicoCarlos.getId()), Math.toIntExact(cardiologia.getId()));
+        EspecializadoId rel1Id = new EspecializadoId(medicoCarlos.getId(), cardiologia.getId());
         Especializado rel1 = new Especializado(rel1Id, medicoCarlos, cardiologia);
 
-        EspecializadoId rel2Id = new EspecializadoId(Math.toIntExact(medicoCarlos.getId()), Math.toIntExact(dermatologia.getId()));
+        EspecializadoId rel2Id = new EspecializadoId(medicoCarlos.getId(), dermatologia.getId());
         Especializado rel2 = new Especializado(rel2Id, medicoCarlos, dermatologia);
 
         List<Especializado> relacionamentos = Arrays.asList(rel1, rel2);

@@ -35,7 +35,7 @@ public class MedicoMongoService {
              throw new IllegalArgumentException("Já existe um médico cadastrado para o usuário com ID " + dto.usuarioId());
         }
 
-        usuario.setCrm(String.valueOf(dto.crm()));
+        usuario.setCrm(dto.crm());
         UsuarioDocument medicoSalvo = usuarioRepository.save(usuario);
         return new MedicoDTO(medicoSalvo);
     }
@@ -80,7 +80,7 @@ public class MedicoMongoService {
         UsuarioDocument medico = usuarioRepository.findByIdAndTipoUsuario(id, TipoUsuario.MEDICO)
                 .orElseThrow(() -> new EntityNotFoundException("Médico com ID " + id + " não encontrado."));
 
-        medico.setCrm(String.valueOf(dto.crm()));
+        medico.setCrm(dto.crm());
         UsuarioDocument medicoAtualizado = usuarioRepository.save(medico);
         return new MedicoDTO(medicoAtualizado);
     }

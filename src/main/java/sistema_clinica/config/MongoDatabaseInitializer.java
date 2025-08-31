@@ -30,15 +30,17 @@ public class MongoDatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        usuarioMongoRepository.deleteAll();
-        especialidadeMongoRepository.deleteAll();
+        if (usuarioMongoRepository.count() == 0) {
+            System.out.println(">>> Populando banco de dados MongoDB com usuários iniciais...");
+            criarUsuariosIniciais();
+        }
 
-        System.out.println(">>> Populando banco de dados MongoDB com dados iniciais...");
+        if (especialidadeMongoRepository.count() == 0) {
+            System.out.println(">>> Populando banco de dados MongoDB com especialidades iniciais e associando ao médico...");
+            criarEspecialidadesEAssociarMedico();
+        }
 
-        criarUsuariosIniciais();
-        criarEspecialidadesEAssociarMedico();
-
-        System.out.println(">>> Dados iniciais inseridos com sucesso no MongoDB!");
+        
     }
 
     private void criarUsuariosIniciais() {

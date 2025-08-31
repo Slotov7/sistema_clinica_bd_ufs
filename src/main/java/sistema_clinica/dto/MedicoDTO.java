@@ -10,7 +10,7 @@ public record MedicoDTO(
 
         String nomeUsuario,
         @NotNull(message = "O CRM é obrigatório.")
-        Integer crm
+        String crm
 ) {
     public MedicoDTO(Medico medico) {
         this(
@@ -24,7 +24,7 @@ public record MedicoDTO(
         this(
                 usuario.getId(),
                 usuario.getNome(),
-                (usuario.getCrm() != null) ? Integer.parseInt(usuario.getCrm()) : null
+                usuario.getCrm()
         );
     }
 }
