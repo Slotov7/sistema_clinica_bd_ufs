@@ -53,27 +53,9 @@ public class UsuarioMongoController {
         return ResponseEntity.ok(responseDTO);
     }
 
-    @DeleteMapping("/{id}")
+        @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletarUsuario(@PathVariable String id) {
         usuarioMongoService.deletarUsuario(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @PostMapping("/{usuarioId}/especialidades")
-    public ResponseEntity<UsuarioResponseDTO> adicionarEspecialidade(
-            @PathVariable String usuarioId,
-            @Valid @RequestBody AdicionarEspecialidadeRequestDTO dto) {
-
-        UsuarioDocument usuarioAtualizado = usuarioMongoService.adicionarEspecialidade(usuarioId, dto.getEspecialidadeId());
-        return ResponseEntity.ok(new UsuarioResponseDTO(usuarioAtualizado));
-    }
-
-    @DeleteMapping("/{usuarioId}/especialidades/{especialidadeId}")
-    public ResponseEntity<UsuarioResponseDTO> removerEspecialidade(
-            @PathVariable String usuarioId,
-            @PathVariable String especialidadeId) {
-
-        UsuarioDocument usuarioAtualizado = usuarioMongoService.removerEspecialidade(usuarioId, especialidadeId);
-        return ResponseEntity.ok(new UsuarioResponseDTO(usuarioAtualizado));
     }
 }

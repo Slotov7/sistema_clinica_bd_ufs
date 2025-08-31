@@ -21,7 +21,7 @@ public class Medico {
     @JoinColumn(name = "id")
     private Usuario usuario;
 
-    @Column(name = "crm", nullable = false)
-    private Integer crm;
+    @Column(name = "crm", nullable = false, length = 20)
+    private String crm;
 
 }

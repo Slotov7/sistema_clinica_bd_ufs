@@ -64,27 +64,4 @@ public class UsuarioMongoService {
         }
         usuarioMongoRepository.deleteById(id);
     }
-    public UsuarioDocument adicionarEspecialidade(String usuarioId, String especialidadeId) {
-        UsuarioDocument usuario = buscarPorId(usuarioId);
-        if (usuario.getTipoUsuario() != TipoUsuario.MEDICO) {
-            throw new IllegalArgumentException("Só é possível adicionar especialidades a usuários do tipo MÉDICO.");
-        }
-        EspecialidadeDocument especialidade = especialidadeMongoService.buscarPorId(especialidadeId);
-        if (usuario.getEspecialidadeIds().contains(especialidade.getId())) {
-            throw new IllegalArgumentException("O médico já possui esta especialidade.");
-        }
-        usuario.getEspecialidadeIds().add(especialidade.getId());
-        return usuarioMongoRepository.save(usuario);
-    }
-    public UsuarioDocument removerEspecialidade(String usuarioId, String especialidadeId) {
-        UsuarioDocument usuario = buscarPorId(usuarioId);
-        if (usuario.getTipoUsuario() != TipoUsuario.MEDICO) {
-            throw new IllegalArgumentException("Apenas usuários do tipo MÉDICO possuem especialidades para remover.");
-        }
-        boolean removeu = usuario.getEspecialidadeIds().remove(especialidadeId);
-        if (!removeu) {
-            throw new EntityNotFoundException("O médico não possui a especialidade com id: " + especialidadeId + " para ser removida.");
-        }
-        return usuarioMongoRepository.save(usuario);
-    }
 }
